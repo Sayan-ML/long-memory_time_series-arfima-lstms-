@@ -1,71 +1,79 @@
 US Price Index Time Series Analysis
 
-A comprehensive time series project exploring the dynamics of the US Price Index (monthly data). The analysis covers statistical time-series modeling, long-memory diagnostics, and deep learning forecasting using LSTM and GRU.
+
+
+
+
+
+
+
+
+
+A comprehensive time series project exploring the dynamics of the US Price Index (monthly data). The project includes statistical modeling, long-memory diagnostics, and deep learning forecasting using LSTM and GRU.
 
 📌 Project Overview
 
-This project performs an end-to-end study of price index behavior, focusing on:
+This project performs an end-to-end study of US price index behavior, focusing on:
 
-Detecting changing variability using rolling statistics.
+Detecting changing variability using rolling statistics
 
-Assessing stationarity, seasonality, and long-term memory.
+Assessing stationarity, seasonality, and long-term memory
 
-Applying both classical time-series models (SARIMA, ARFIMA) and deep learning models (LSTM/GRU).
+Applying both classical time-series models (SARIMA, ARFIMA) and deep learning (LSTM/GRU)
 
-Conducting a rigorous diagnostic check of model assumptions.
+Conducting rigorous diagnostic checks of model assumptions
 
-Comparing forecast performance across models.
+Comparing performance across all models
 
-The dataset consists of monthly US Price Index values.
+Dataset: Monthly US Price Index values.
 
 🔍 Exploratory Data Analysis (EDA)
 ✅ 1. Variability Analysis
 
-Computed rolling mean and rolling standard deviation.
+Computed rolling mean and rolling standard deviation
 
-Identified potential periods of changing volatility in the series.
+Identified periods of changing volatility
 
 ✅ 2. Stationarity Check
 
-Tools used:
+Methods used:
 
-ADF test
+ADF Test
 
-KPSS test
+KPSS Test
 
-Visual inspection of rolling statistics
+Rolling statistics
 
-Finding:
-The series showed non-stationary behavior.
+Finding: The series is non-stationary.
 
 ✅ 3. Seasonality Detection
 
-Seasonal patterns observed through:
+Seasonality was identified via:
 
 Seasonal decomposition
 
-Monthly autocorrelation patterns
+Monthly ACF/PACF structure
 
 Spectral analysis
 
-✅ 4. Long-Term Memory
+✅ 4. Long-Term Memory Detection
 
-Two methods were applied:
+Two techniques were applied:
 
 • Hurst Exponent
 
-Estimated > 0.5, indicating persistent long-memory behavior.
+Result: H > 0.5 indicating persistent long-memory behavior
 
-• GPH Log-Periodogram Regression
+• GPH (Geweke–Porter–Hudak) Log-Periodogram Regression
 
-Confirmed fractional differencing requirement.
+Result: Suggests the need for fractional differencing (d)
 
 ⚙️ Data Transformation
 ✅ Seasonal Differencing
 
-Applied D = 1 for monthly seasonality (lag 12).
+Applied D = 1 for monthly seasonality (lag 12)
 
-✅ Fractional Differencing for Long Memory
+✅ Fractional Differencing
 
 Estimated fractional differencing parameter d using:
 
@@ -75,95 +83,96 @@ Hurst-based inference
 
 📈 Modeling Approach
 1. ARFIMA (Fractionally Integrated Model)
-✅ Specification:
+✅ Specification
 
-Fractional differencing d applied.
+Applied fractional differencing (d)
 
-Seasonal AR and MA terms included for monthly seasonality.
+Included seasonal AR and MA terms
 
-The model successfully captured long-memory + seasonality structure.
+Captured long-memory + seasonality effectively
 
-✅ Diagnostics:
+✅ Diagnostics
 
-Residual ACF + PACF
+Residual ACF/PACF
 
 Ljung-Box test
 
-No significant autocorrelation left in residuals
-
-Reasonable information criteria values
+No significant residual autocorrelation
 
 2. SARIMA (Short Memory Model)
-✅ Model Used:
+✅ Model Used
 SARIMA(p, d=1, q)(P, D=1, Q)m
 
 
 d = 1 for trend
 
-D = 1 for seasonal structure
+D = 1 for seasonality
 
-Seasonal periodicity m = 12 (monthly)
+m = 12 for monthly periodicity
 
-✅ SARIMA Assumptions Verified:
+✅ Assumptions Checked
 
 Residuals ≈ white noise
 
-No serial correlation (ACF/PACF of residuals)
+No serial correlation
 
-Homoscedasticity checked via:
+Homoscedasticity validated using:
 
 ACF of squared residuals
 
 ARCH test
 
 Finding:
-SARIMA handled seasonality but struggled due to long-memory behavior.
+SARIMA handled seasonality but struggled with long-memory behavior.
 
 🤖 Deep Learning Models
 
-The series showed persistent, non-linear long-term dependencies, making it suitable for neural sequence models.
+The dataset exhibited persistent, nonlinear long-memory patterns, making it suitable for deep sequence models.
 
-✅ Models Implemented:
+✅ Models Implemented
 
 LSTM
 
 GRU
 
-✅ Why DL Was Considered?
+✅ Why DL Was Used
 
-Non-linear patterns
+Captures non-linear dynamics
 
-Long-memory and extended dependencies
+Memorizes long-term dependencies
 
-SARIMA/ARFIMA could not fully capture complex temporal structure
+Overcomes limitations of linear statistical models
 
-✅ Results:
+✅ Results
 
-LSTM performed best, achieving strong predictive accuracy
+LSTM outperformed all models
 
-Captured both short-term noise and long-range structure
+Captured both short-term variations and long-range structure
 
-GRU performed reasonably but slightly weaker than LSTM
+GRU performed reasonably but weaker than LSTM
 
 📊 Forecast Comparison
-
-Classical models (SARIMA, ARFIMA) provided interpretable structure.
-
-LSTM delivered superior predictive accuracy, especially for longer horizons.
-
+Model	Handles Seasonality	Handles Long Memory	Handles Non-Linearity	Performance
+SARIMA	✅	❌	❌	Moderate
+ARFIMA	✅	✅	❌	Good
+LSTM	✅	✅	✅	⭐ Best
+GRU	✅	✅	✅	Good
 📁 Repository Structure
 ├── data/
 │   └── us_price_index.csv
+│
 ├── notebooks/
 │   ├── 01_EDA.ipynb
 │   ├── 02_ARFIMA_Modeling.ipynb
 │   ├── 03_SARIMA_Modeling.ipynb
 │   └── 04_LSTM_GRU_Forecasting.ipynb
+│
 ├── src/
 │   ├── preprocessing.py
 │   ├── models_arima.py
 │   ├── models_lstm.py
 │   └── evaluation.py
+│
 └── README.md
 
 🧪 Methods & Libraries Used
@@ -171,15 +180,15 @@ Statistical Modeling
 
 statsmodels
 
-arch
-
 pmdarima
+
+arch
 
 Deep Learning
 
-tensorflow / keras
+tensorflow
 
-Sequence modeling layers (LSTM, GRU)
+keras
 
 General
 
@@ -193,20 +202,20 @@ seaborn
 
 ✅ Conclusions
 
-The US Price Index series displays trend, seasonality, and long-memory persistence.
+The US Price Index shows trend, seasonality, and long-memory persistence
 
-ARFIMA is well-suited for long-memory modeling but less effective for complex non-linearities.
+ARFIMA effectively captured long-memory structure
 
-SARIMA works for short-memory seasonal components but cannot capture long-term persistence well.
+SARIMA handled seasonal dynamics but not long-range memory
 
-LSTM outperformed all statistical models in forecasting accuracy.
+LSTM achieved the most accurate forecasts
 
 🚀 Future Work
 
-Try ARFIMA + GARCH to capture volatility clustering
+Combine ARFIMA + GARCH to model long memory + volatility
 
-Explore Transformer-based forecasting models
+Try Transformer-based forecasting
 
-Compare with Prophet, ETS, and N-BEATS
+Compare against Prophet, ETS, N-BEATS
 
-Hyperparameter optimization for LSTM/GRU
+Hyperparameter tuning for LSTM/GRU
