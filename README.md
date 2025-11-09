@@ -1,221 +1,242 @@
-US Price Index Time Series Analysis
+# Time Series Analysis of US Price Index
 
+A comprehensive time series analysis project examining monthly US Price Index data using classical statistical methods and modern deep learning approaches.
 
+## 📊 Project Overview
 
+This project performs an in-depth analysis of US Price Index monthly data, exploring temporal patterns, stationarity, seasonality, and long-term memory characteristics. The analysis progresses from exploratory data analysis through traditional ARFIMA/SARIMA modeling to advanced LSTM/GRU neural network architectures.
 
+## 🎯 Objectives
 
+- Analyze temporal characteristics of US Price Index data
+- Identify and quantify seasonality patterns
+- Assess stationarity and long-term memory properties
+- Compare classical time series models (ARFIMA, SARIMA) with deep learning approaches (LSTM, GRU)
+- Build robust forecasting models accounting for non-linearity and long-term dependencies
 
+## 📁 Dataset
 
+- **Source**: US Price Index Monthly Data
+- **Type**: Time Series
+- **Characteristics**: Long-term memory, seasonal patterns, non-linear behavior
 
+## 🔍 Methodology
 
+### 1. Exploratory Data Analysis (EDA)
 
-A comprehensive time series project exploring the dynamics of the US Price Index (monthly data). The project includes statistical modeling, long-memory diagnostics, and deep learning forecasting using LSTM and GRU.
+#### Variability Analysis
+- **Rolling Standard Deviation**: Assessed changing variability over time to detect heteroscedasticity and volatility clustering
 
-📌 Project Overview
+#### Seasonality Detection
+- Comprehensive visual and statistical analysis of seasonal patterns
+- Seasonal decomposition to isolate trend, seasonal, and residual components
+- Identification of periodic cycles in the data
 
-This project performs an end-to-end study of US price index behavior, focusing on:
+### 2. Stationarity Testing
 
-Detecting changing variability using rolling statistics
+Evaluated the stationarity properties of the time series:
+- Augmented Dickey-Fuller (ADF) test
+- KPSS test
+- Visual inspection of rolling statistics
 
-Assessing stationarity, seasonality, and long-term memory
+### 3. Long-Term Memory Analysis
 
-Applying both classical time-series models (SARIMA, ARFIMA) and deep learning (LSTM/GRU)
+#### Hurst Coefficient
+- Calculated Hurst exponent to measure long-term memory
+- **H > 0.5**: Indicates persistent long-term memory (positive autocorrelation)
+- **H = 0.5**: Random walk behavior
+- **H < 0.5**: Anti-persistent behavior
 
-Conducting rigorous diagnostic checks of model assumptions
+#### GPH Filter (Geweke-Porter-Hudak)
+- Semi-parametric estimation of the fractional differencing parameter *d*
+- Validated presence of long-term dependencies in the series
 
-Comparing performance across all models
+### 4. Data Preprocessing
 
-Dataset: Monthly US Price Index values.
+#### Seasonal Differencing
+- Applied seasonal differencing to remove seasonal patterns
+- Prepared data for ARFIMA and SARIMA modeling
 
-🔍 Exploratory Data Analysis (EDA)
-✅ 1. Variability Analysis
+### 5. Classical Time Series Models
 
-Computed rolling mean and rolling standard deviation
+#### ARFIMA Model (AutoRegressive Fractionally Integrated Moving Average)
+- **Model Structure**: ARFIMA(p, d, q) × (P, D, Q)s
+- Incorporated seasonal AR and MA terms
+- Captured long-term memory through fractional differencing parameter *d*
+- Suitable for data with long-range dependence
 
-Identified periods of changing volatility
+#### SARIMA Model (Seasonal ARIMA)
+- **Model Structure**: SARIMA(p, d, q) × (P, D, Q)s
+- **Differencing**: d=1 (non-seasonal), D=1 (seasonal)
+- Short-term memory alternative to ARFIMA
+- Appropriate for stationary data with seasonal patterns
 
-✅ 2. Stationarity Check
+### 6. Model Diagnostics
 
-Methods used:
+#### Residual Analysis
+- **Normality**: Q-Q plots, Shapiro-Wilk test
+- **Autocorrelation**: ACF/PACF plots of residuals
+- **White Noise**: Ljung-Box test
 
-ADF Test
+#### Heteroscedasticity Testing
+- **Visual Analysis**: ACF of squared residuals to detect volatility clustering
+- **ARCH Test**: Engle's test for autoregressive conditional heteroscedasticity
+- Assessed whether variance is constant over time
 
-KPSS Test
+### 7. Deep Learning Models
 
-Rolling statistics
+Given the identified characteristics (long-term memory, non-linearity), neural network architectures were employed:
 
-Finding: The series is non-stationary.
+#### LSTM (Long Short-Term Memory)
+- **Architecture**: Specialized RNN with memory cells
+- **Advantages**: 
+  - Captures long-term dependencies effectively
+  - Handles non-linear patterns
+  - Mitigates vanishing gradient problem
+- **Performance**: Achieved superior results due to long-term memory capability
 
-✅ 3. Seasonality Detection
-
-Seasonality was identified via:
-
-Seasonal decomposition
-
-Monthly ACF/PACF structure
-
-Spectral analysis
-
-✅ 4. Long-Term Memory Detection
-
-Two techniques were applied:
-
-• Hurst Exponent
-
-Result: H > 0.5 indicating persistent long-memory behavior
-
-• GPH (Geweke–Porter–Hudak) Log-Periodogram Regression
-
-Result: Suggests the need for fractional differencing (d)
-
-⚙️ Data Transformation
-✅ Seasonal Differencing
-
-Applied D = 1 for monthly seasonality (lag 12)
-
-✅ Fractional Differencing
-
-Estimated fractional differencing parameter d using:
-
-GPH estimator
-
-Hurst-based inference
-
-📈 Modeling Approach
-1. ARFIMA (Fractionally Integrated Model)
-✅ Specification
-
-Applied fractional differencing (d)
-
-Included seasonal AR and MA terms
-
-Captured long-memory + seasonality effectively
-
-✅ Diagnostics
-
-Residual ACF/PACF
-
-Ljung-Box test
-
-No significant residual autocorrelation
-
-2. SARIMA (Short Memory Model)
-✅ Model Used
-SARIMA(p, d=1, q)(P, D=1, Q)m
-
-
-d = 1 for trend
-
-D = 1 for seasonality
-
-m = 12 for monthly periodicity
-
-✅ Assumptions Checked
-
-Residuals ≈ white noise
-
-No serial correlation
-
-Homoscedasticity validated using:
-
-ACF of squared residuals
-
-ARCH test
-
-Finding:
-SARIMA handled seasonality but struggled with long-memory behavior.
-
-🤖 Deep Learning Models
-
-The dataset exhibited persistent, nonlinear long-memory patterns, making it suitable for deep sequence models.
-
-✅ Models Implemented
-
-LSTM
-
-GRU
-
-✅ Why DL Was Used
-
-Captures non-linear dynamics
-
-Memorizes long-term dependencies
-
-Overcomes limitations of linear statistical models
-
-✅ Results
-
-LSTM outperformed all models
-
-Captured both short-term variations and long-range structure
-
-GRU performed reasonably but weaker than LSTM
-
-📊 Forecast Comparison
-Model	Handles Seasonality	Handles Long Memory	Handles Non-Linearity	Performance
-SARIMA	✅	❌	❌	Moderate
-ARFIMA	✅	✅	❌	Good
-LSTM	✅	✅	✅	⭐ Best
-GRU	✅	✅	✅	Good
-📁 Repository Structure
+#### GRU (Gated Recurrent Unit)
+- **Architecture**: Simplified variant of LSTM
+- **Advantages**:
+  - Fewer parameters than LSTM
+  - Faster training
+  - Comparable performance for many time series tasks
+
+## 📈 Results
+
+### Model Comparison
+
+| Model | Strengths | Limitations |
+|-------|-----------|-------------|
+| **ARFIMA** | Captures long-term memory, handles fractional integration | Assumes linearity, complex parameter estimation |
+| **SARIMA** | Well-suited for seasonal data, interpretable | Short-term memory only, linear assumptions |
+| **LSTM** | ✅ **Best Performance** - Handles non-linearity and long-term dependencies | Requires more data, less interpretable |
+| **GRU** | Good balance of performance and efficiency | Slightly less powerful than LSTM for complex patterns |
+
+### Key Findings
+
+1. **Long-Term Memory**: Hurst coefficient and GPH filter confirmed significant long-term dependence
+2. **Seasonality**: Strong seasonal patterns identified and modeled
+3. **Non-Linearity**: Evidence of non-linear dynamics in the data
+4. **Heteroscedasticity**: ARCH effects detected, indicating time-varying volatility
+5. **LSTM Performance**: Superior forecasting accuracy due to ability to capture long-term memory and non-linear patterns
+
+## 🛠️ Technologies Used
+
+- **Python**: Primary programming language
+- **Statistical Libraries**: 
+  - `statsmodels`: ARFIMA, SARIMA, statistical tests
+  - `arch`: ARCH/GARCH testing
+  - `scipy`: Statistical analysis
+- **Deep Learning**: 
+  - `TensorFlow`/`Keras` or `PyTorch`: LSTM/GRU implementation
+- **Data Processing**: 
+  - `pandas`: Data manipulation
+  - `numpy`: Numerical computations
+- **Visualization**: 
+  - `matplotlib`: Plotting
+  - `seaborn`: Statistical visualizations
+
+## 📊 Project Structure
+
+```
 ├── data/
 │   └── us_price_index.csv
-│
 ├── notebooks/
-│   ├── 01_EDA.ipynb
-│   ├── 02_ARFIMA_Modeling.ipynb
-│   ├── 03_SARIMA_Modeling.ipynb
-│   └── 04_LSTM_GRU_Forecasting.ipynb
-│
-├── src/
-│   ├── preprocessing.py
-│   ├── models_arima.py
-│   ├── models_lstm.py
-│   └── evaluation.py
-│
+│   ├── 01_eda.ipynb
+│   ├── 02_stationarity_tests.ipynb
+│   ├── 03_long_term_memory.ipynb
+│   ├── 04_arfima_model.ipynb
+│   ├── 05_sarima_model.ipynb
+│   └── 06_lstm_gru_models.ipynb
+├── models/
+│   ├── arfima_model.pkl
+│   ├── sarima_model.pkl
+│   ├── lstm_model.h5
+│   └── gru_model.h5
+├── results/
+│   ├── plots/
+│   └── evaluation_metrics.csv
+├── requirements.txt
 └── README.md
+```
 
-🧪 Methods & Libraries Used
-Statistical Modeling
+## 🚀 Getting Started
 
-statsmodels
+### Prerequisites
 
-pmdarima
+```bash
+Python 3.8+
+pip or conda
+```
 
-arch
+### Installation
 
-Deep Learning
+```bash
+# Clone the repository
+git clone https://github.com/yourusername/us-price-index-analysis.git
+cd us-price-index-analysis
 
-tensorflow
+# Create virtual environment
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
 
-keras
+# Install dependencies
+pip install -r requirements.txt
+```
 
-General
+### Usage
 
-pandas
+```python
+# Example: Running LSTM model
+from models.lstm_model import LSTMForecaster
 
-numpy
+# Load and preprocess data
+forecaster = LSTMForecaster()
+forecaster.load_data('data/us_price_index.csv')
+forecaster.preprocess()
 
-matplotlib
+# Train model
+forecaster.train(epochs=100, batch_size=32)
 
-seaborn
+# Make predictions
+predictions = forecaster.predict(steps=12)
+```
 
-✅ Conclusions
+## 📊 Key Insights
 
-The US Price Index shows trend, seasonality, and long-memory persistence
+1. **Long-Term Memory Dominates**: The Hurst coefficient indicated strong long-term dependencies, making ARFIMA and LSTM more suitable than simple SARIMA
+2. **Seasonality Matters**: Seasonal differencing and seasonal terms significantly improved model performance
+3. **Non-Linear Patterns**: LSTM outperformed linear models, confirming non-linear dynamics
+4. **Volatility Clustering**: ARCH effects suggest periods of high and low volatility cluster together
 
-ARFIMA effectively captured long-memory structure
+## 🔮 Future Work
 
-SARIMA handled seasonal dynamics but not long-range memory
+- Implement hybrid ARFIMA-LSTM models
+- Explore GARCH models for volatility forecasting
+- Add attention mechanisms to LSTM architecture
+- Perform multivariate analysis with economic indicators
+- Deploy forecasting model as REST API
 
-LSTM achieved the most accurate forecasts
+## 📚 References
 
-🚀 Future Work
+- Box, G. E. P., Jenkins, G. M., & Reinsel, G. C. (2015). *Time Series Analysis: Forecasting and Control*
+- Geweke, J., & Porter-Hudak, S. (1983). The estimation and application of long memory time series models
+- Hochreiter, S., & Schmidhuber, J. (1997). Long Short-Term Memory
+- Hurst, H. E. (1951). Long-term storage capacity of reservoirs
 
-Combine ARFIMA + GARCH to model long memory + volatility
+## 👤 Author
 
-Try Transformer-based forecasting
+Your Name - [GitHub Profile](https://github.com/yourusername)
 
-Compare against Prophet, ETS, N-BEATS
+## 📄 License
 
-Hyperparameter tuning for LSTM/GRU
+This project is licensed under the MIT License - see the LICENSE file for details
+
+## 🤝 Contributing
+
+Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](https://github.com/yourusername/us-price-index-analysis/issues).
+
+---
+
+**Note**: This project demonstrates advanced time series analysis techniques combining classical econometric methods with modern deep learning approaches.
