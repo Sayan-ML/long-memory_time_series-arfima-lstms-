@@ -227,7 +227,7 @@ predictions = forecaster.predict(steps=12)
 
 ## 👤 Author
 
-Your Name - [GitHub Profile](https://github.com/yourusername)
+Your Name - [GitHub Profile](https://github.com/Sayan-ML)
 
 ## 📄 License
 
